@@ -5,32 +5,53 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
-    <title>Yellow-Page-scraper</title>
+    <link href="/static/css/style.css" rel="stylesheet">
+
+    <title>Yellow-Page-Scraper</title>
 </head>
 
 
-<div class="jumbotron">
+<div class="container-fluid jumbotron">
     <div style="display: flex; ">
-        <form style="flex: 6; " class="form-group" action="" method="">
-            <input class="form-control" type="text" placeholder="Enter Page URL">
+        <form style="flex: 6; " class="form-group">
+            <p><input id="scrape_url" class="form-control" type="text" placeholder="Enter Page URL"></p>
             <div class="row">
-                <div class="col-6">
-                    <input class="form-control" placeholder="Start Page No">
+                <p>
+                <div class="col-3">
+                    <input id="spn" value="1" class="form-control" placeholder="Start Page No">
                 </div>
-                <div class="col-6">
-                    <input class="form-control" placeholder="End Page No">
+                </p>
+                <p>
+                <div class="col-3">
+                    <input id="epn" value="5" class="form-control" placeholder="End Page No">
                 </div>
+                </p>
+                <p>
+                <div class="col-3">
+                    <input value="" id="keyword" class="form-control" placeholder="keyword">
+                </div>
+                </p>
+                <p>
+                <div class="col-3">
+                    <input value="" id="locations" class="form-control" placeholder="location">
+                </div>
+                </p>
+
             </div>
-            <button style="flex: 1;" class="btn btn-primary">Search</button>
+            <p>
+            <div id="scrape" style="flex: 1;" class="btn btn-primary">Scrape</div>
+            </p>
         </form>
     </div>
 </div>
-
-<div class="container-fluid">
-    <table class="table">
+<!-- Table For Data -->
+<div style="overflow: auto;" class="container-fluid">
+    <p><a id="toCsv" class="btn btn-warning">Export to CSV</a></p>
+    <table class="table" id="table-data">
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -41,19 +62,19 @@
                 <th scope="col">Website</th>
                 <th scope="col">Email</th>
                 <th scope="col">Extra Phone</th>
-
+                <th scope="col">keyword</th>
+                <th scope="col">location</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-        </tbody>
+        <tbody></tbody>
     </table>
 </div>
+<!-- End Table -->
+
 </body>
+
+<script src="{{ url_for('static', filename='js/getCreateCookie.js') }}"></script>
+<script src="{{ url_for('static', filename='js/tableCookie.js') }}"></script>
+<script src="static/js/main.js"></script>
 
 </html>
