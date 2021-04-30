@@ -40,7 +40,7 @@ scrape.addEventListener("click", function () {
     "Scraping starts..... please wait for while to see results!";
   scrape.style.pointerEvents = "none";
 
-  // ScrapeAPIFunction(scrape_url, start_page_no, end_page_no, keyword, locations);
+  ScrapeAPIFunction(scrape_url, start_page_no, end_page_no, keyword, locations);
 
   //Show results into table
   ShowResults(locations, keyword);
