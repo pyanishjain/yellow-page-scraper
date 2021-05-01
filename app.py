@@ -210,7 +210,7 @@ def result():
             print("Removed pages",flush=True)
         except Exception as e:
             print("ERROR!!! while deleting pages", e ,flush=True)
-        return jsonify({"stop":True})
+        return jsonify({"stop":False})
         
         
 
