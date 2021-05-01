@@ -31,11 +31,8 @@ email = []
 extra_phone = []
 rating = []
 
-
-
 def parse_list_page(scrape_url,page_no):
     url = scrape_url + f"{page_no}"
-    print('Scraping Urls........',url,flush=True)
     res = requests.get(url)
     if res.status_code == 200:    
         soup = bs(res.content,features="html.parser")
@@ -44,7 +41,6 @@ def parse_list_page(scrape_url,page_no):
             links.append(site_url + link.get("href"))
     else:
         print("somthing went wrong")
-
 
 # For downloading the html pages
 def download_url(url):
@@ -55,27 +51,16 @@ def download_url(url):
         fh.close()
 
 def parse_inner_page(link):
-    global busines_names 
-    global address 
-    global phone 
-    global website_link  
-    global email 
-    global extra_phone 
-    global rating 
-
     table_list = [] 
-    print("Inside Parse_inner_page Function!!!!!!!!!!")
     title = link
     path = os.path.join("pages",title)
     with open(path,"rb") as f:
         data = f.read()
         f.close
-     
     # Making soup object for each download pages  
     t1 = time.time()  
     soup = bs(data,features="html.parser")
     t2 = time.time()
-    print("Time Taken to make soup",t2-t1)
 
     var =  soup.find(class_ = "sales-info")
     try: 
@@ -86,7 +71,6 @@ def parse_inner_page(link):
     except:
         # busines_names.append("none")
         table_list.append("none")  
-
 
     var = soup.find(class_ = "result-rating")
     try:
@@ -202,39 +186,24 @@ def scrape():
     return jsonify({"total_links":len(links)})
 
 @app.route("/result",methods=["POST"])
-def result():
-    global busines_names 
-    global address 
-    global phone 
-    global website_link  
-    global email 
-    global extra_phone 
-    global rating 
-    # Fetching Data
-    
+def result():    
     data = request.get_json()
     idx = int(data['idx'])
     location = data['location']
     keyword = data['keyword']
     title = os.listdir("pages")
-    print('idx',idx,'Len Title>>>>>>>>>>>>>>>>>>>>>>>>>>',len(title))
     try:
-        print('inside try block','idx',idx,'Len Title>>>>>>>>>>>>>>>>>>>>>>>>>>',len(title))
-        # print("Title are >>>>>>>>>>>>>>>>>>>",title , flush=True)
         table_list = parse_inner_page(title[idx])
         return jsonify({0:idx,1:table_list[0],2:table_list[1],3:table_list[2],4:table_list[3],5:table_list[4],6:table_list[5],7:table_list[6],8:keyword,9:location})
     except Exception as e:
-        print('EXPECTION >>>>>>>>>>',e,flush=True)
         try:
-            # shutil.rmtree('pages')
-            #os.mkdir('pages')
-            print("Removed pages",flush=True)
+            shutil.rmtree('pages')
+            # print("Removed pages",flush=True)
         except Exception as e:
             print("ERROR!!! while deleting pages", e ,flush=True)
-        return jsonify({"stop":False})
+        return jsonify({"stop":True})
         
         
-
 # Download CSV     
 @app.route("/tocsv")
 def tocsv():
@@ -251,8 +220,6 @@ def tocsv():
     response.headers['Content-Disposition'] = cd 
     response.mimetype='text/csv'
     return response
-
-
 
 if __name__ == '__main__':
     app.run()
