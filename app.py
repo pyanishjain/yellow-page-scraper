@@ -185,13 +185,14 @@ def result():
     location = data['location']
     keyword = data['keyword']
     title = os.listdir("pages")
-    # print('idx',idx,'Len Title>>>>>>>>>>>>>>>>>>>>>>>>>>',len(title))
+    print('idx',idx,'Len Title>>>>>>>>>>>>>>>>>>>>>>>>>>',len(title))
     # try:
     #     print('inside try block','idx',idx,'Len Title>>>>>>>>>>>>>>>>>>>>>>>>>>',len(title))
     #     # print("Title are >>>>>>>>>>>>>>>>>>>",title , flush=True)
     parse_inner_page(title[idx])
     #     # time.sleep(2)
-    return jsonify({0:idx,1:busines_names[idx],2:address[idx],3:rating[idx],4:phone[idx],5:website_link[idx],6:email[idx],7:extra_phone[idx],8:keyword,9:location})
+    # return jsonify({0:idx,1:busines_names[idx],2:address[idx],3:rating[idx],4:phone[idx],5:website_link[idx],6:email[idx],7:extra_phone[idx],8:keyword,9:location})
+    return jsonify({"ressult":"yes"})
     # except Exception as e:
     #     print('EXPECTION >>>>>>>>>>',e,flush=True)
     #     try:
