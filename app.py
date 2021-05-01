@@ -211,3 +211,8 @@ def tocsv():
     response.headers['Content-Disposition'] = cd 
     response.mimetype='text/csv'
     return response
+
+
+
+if __name__ == '__main__':
+    app.run()
