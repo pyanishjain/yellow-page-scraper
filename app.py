@@ -61,7 +61,9 @@ def parse_inner_page(link):
     global website_link  
     global email 
     global extra_phone 
-    global rating  
+    global rating 
+
+    table_list = [] 
     print("Inside Parse_inner_page Function!!!!!!!!!!")
     title = link
     path = os.path.join("pages",title)
@@ -76,23 +78,32 @@ def parse_inner_page(link):
     print("Time Taken to make soup",t2-t1)
 
     var =  soup.find(class_ = "sales-info")
-    try:                
-        busines_names.append(var.find("h1").text)
-        print(busines_names)
+    try: 
+        table_list.append(var.find("h1").text)               
+        # busines_names.append(var.find("h1").text)
+        # print(busines_names)
+        
     except:
-        busines_names.append("none")
+        # busines_names.append("none")
+        table_list.append("none")  
+
 
     var = soup.find(class_ = "result-rating")
     try:
-        rating.append(rating_dict[(" ").join(var.get("class")[1:])])
+        # rating.append(rating_dict[(" ").join(var.get("class")[1:])])
+        table_list.append(rating_dict[(" ").join(var.get("class")[1:])])
     except:
-        rating.append("none")
+        # rating.append("none")
+        table_list.append("none")
 
     var = soup.find(class_='address')
     try:
-        address.append(var.text)
+        # address.append(var.text)
+        table_list.append(var.text)
+        
     except:
-        address.append("none")
+        # address.append("none")
+        table_list.append("none")
     # Formate phone Number
     # pat = re.compile("\d+")
     # p = ("").join (pat.findall(s))
@@ -100,21 +111,28 @@ def parse_inner_page(link):
     var = soup.find(class_='phone')
     try:
         p = var.text
-        phone.append(p)
+        # phone.append(p)
+        table_list.append(p)
     except:
-        phone.append("none")
+        # phone.append("none")
+        table_list.append("none")
 
     var = soup.find(class_ = 'website-link')
     try:
-        website_link.append(var.get("href"))
+        # website_link.append(var.get("href"))
+        table_list.append(var.get("href"))
     except:
-        website_link.append("none")
+        # website_link.append("none")
+        table_list.append("none")
 
     var = soup.find(class_="email-business")
     try:
-        email.append(var.get("href")[7:])
+        # email.append(var.get("href")[7:])
+        table_list.append(var.get("href")[7:])
+
     except:
-        email.append("none")
+        # email.append("none")
+        table_list.append("none")
 
     var = soup.findAll(class_ = "extra-phones")
     try:
@@ -124,9 +142,12 @@ def parse_inner_page(link):
         pl=pat.findall(s)
         for i in range(0,len(pl) ,3):
             ex_pn = ex_pn+("").join(pl[i:i+3]) + ","
-        extra_phone.append(ex_pn)
+        # extra_phone.append(ex_pn)
+        table_list.append(ex_pn)
     except:
-        extra_phone.append("none")
+        # extra_phone.append("none")
+        table_list.append("none")
+    return table_list
 
         
 @app.route('/')
@@ -200,8 +221,8 @@ def result():
     try:
         print('inside try block','idx',idx,'Len Title>>>>>>>>>>>>>>>>>>>>>>>>>>',len(title))
         # print("Title are >>>>>>>>>>>>>>>>>>>",title , flush=True)
-        parse_inner_page(title[idx])
-        return jsonify({0:idx,1:busines_names[idx],2:address[idx],3:rating[idx],4:phone[idx],5:website_link[idx],6:email[idx],7:extra_phone[idx],8:keyword,9:location})
+        table_list = parse_inner_page(title[idx])
+        return jsonify({0:idx,1:table_list[0],2:table_list[1],3:table_list[2],4:table_list[3],5:table_list[4],6:table_list[5],7:table_list[6],8:keyword,9:location})
     except Exception as e:
         print('EXPECTION >>>>>>>>>>',e,flush=True)
         try:
