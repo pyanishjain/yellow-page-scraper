@@ -11,6 +11,7 @@ import threading
 import os
 import shutil
 
+
 # https://realpython.com/flask-by-example-part-1-project-setup/
 # For auto restast of sever while saving a file
 # FLASK_ENV=deployement flask run
@@ -170,6 +171,7 @@ def scrape():
 @app.route("/result",methods=["POST"])
 def result():
     # Fetching Data
+    
     data = request.get_json()
     idx = int(data['idx'])
     location = data['location']
@@ -177,6 +179,7 @@ def result():
     title = os.listdir("pages")
     try:
         parse_inner_page(title[idx])
+        time.sleep(1)
         return jsonify({0:idx,1:busines_names[idx],2:address[idx],3:rating[idx],4:phone[idx],5:website_link[idx],6:email[idx],7:extra_phone[idx],8:keyword,9:location})
     except Exception as e:
         print('EXPECTION >>>>>>>>>>',e,flush=True)
