@@ -55,6 +55,13 @@ def download_url(url):
         fh.close()
 
 def parse_inner_page(link):
+    global busines_names 
+    global address 
+    global phone 
+    global website_link  
+    global email 
+    global extra_phone 
+    global rating  
     print("Inside Parse_inner_page Function!!!!!!!!!!")
     title = link
     path = os.path.join("pages",title)
@@ -67,9 +74,6 @@ def parse_inner_page(link):
     soup = bs(data,features="html.parser")
     t2 = time.time()
     print("Time Taken to make soup",t2-t1)
-
-
-    
 
     var =  soup.find(class_ = "sales-info")
     try:                
@@ -178,6 +182,13 @@ def scrape():
 
 @app.route("/result",methods=["POST"])
 def result():
+    global busines_names 
+    global address 
+    global phone 
+    global website_link  
+    global email 
+    global extra_phone 
+    global rating 
     # Fetching Data
     
     data = request.get_json()
@@ -190,7 +201,7 @@ def result():
         print('inside try block','idx',idx,'Len Title>>>>>>>>>>>>>>>>>>>>>>>>>>',len(title))
         # print("Title are >>>>>>>>>>>>>>>>>>>",title , flush=True)
         parse_inner_page(title[idx])
-        return jsonify({0:idx-1,1:busines_names[idx-1],2:address[idx-1],3:rating[idx-1],4:phone[idx-1],5:website_link[idx-1],6:email[idx-1],7:extra_phone[idx-1],8:keyword,9:location})
+        return jsonify({0:idx,1:busines_names[idx],2:address[idx],3:rating[idx],4:phone[idx],5:website_link[idx],6:email[idx],7:extra_phone[idx],8:keyword,9:location})
     except Exception as e:
         print('EXPECTION >>>>>>>>>>',e,flush=True)
         try:
