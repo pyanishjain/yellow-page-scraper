@@ -55,19 +55,26 @@ def download_url(url):
         fh.close()
 
 def parse_inner_page(link):
-    # print("Inside Parse_inner_page Function!!!!!!!!!!")
+    print("Inside Parse_inner_page Function!!!!!!!!!!")
     title = link
     path = os.path.join("pages",title)
     with open(path,"rb") as f:
         data = f.read()
         f.close
-
-    # Making soup object for each download pages    
+     
+    # Making soup object for each download pages  
+    t1 = time.time()  
     soup = bs(data,features="html.parser")
+    t2 = time.time()
+    print("Time Taken to make soup",t2-t1)
+
+
+    
 
     var =  soup.find(class_ = "sales-info")
     try:                
         busines_names.append(var.find("h1").text)
+        print(busines_names)
     except:
         busines_names.append("none")
 
@@ -181,7 +188,7 @@ def result():
     # print('idx',idx,'Len Title>>>>>>>>>>>>>>>>>>>>>>>>>>',len(title))
     try:
         print('inside try block','idx',idx,'Len Title>>>>>>>>>>>>>>>>>>>>>>>>>>',len(title))
-        print("Title are >>>>>>>>>>>>>>>>>>>",title , flush=True)
+        # print("Title are >>>>>>>>>>>>>>>>>>>",title , flush=True)
         parse_inner_page(title[idx])
         # time.sleep(2)
         return jsonify({0:idx,1:busines_names[idx],2:address[idx],3:rating[idx],4:phone[idx],5:website_link[idx],6:email[idx],7:extra_phone[idx],8:keyword,9:location})
