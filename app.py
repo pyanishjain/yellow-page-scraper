@@ -187,12 +187,13 @@ def result():
     except Exception as e:
         print('EXPECTION >>>>>>>>>>',e,flush=True)
         try:
-            shutil.rmtree('pages')
+            # shutil.rmtree('pages')
             #os.mkdir('pages')
             print("Removed pages",flush=True)
         except Exception as e:
             print("ERROR!!! while deleting pages", e ,flush=True)
-        return jsonify({"stop":True})
+        # return jsonify({"stop":True})
+        return jsonify({"stop":False})
         
 
 # Download CSV     
