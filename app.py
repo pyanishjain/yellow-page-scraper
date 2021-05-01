@@ -55,7 +55,7 @@ def download_url(url):
         fh.close()
 
 def parse_inner_page(link):
-    print("Inside Parse_inner_page Function!!!!!!!!!!")
+    # print("Inside Parse_inner_page Function!!!!!!!!!!")
     title = link
     path = os.path.join("pages",title)
     with open(path,"rb") as f:
@@ -178,9 +178,9 @@ def result():
     location = data['location']
     keyword = data['keyword']
     title = os.listdir("pages")
-    print('idx',idx,'Len Title>>>>>>>>>>>>>>>>>>>>>>>>>>',len(title))
+    # print('idx',idx,'Len Title>>>>>>>>>>>>>>>>>>>>>>>>>>',len(title))
     try:
-        print('inside try block','idx',idx,'Len Title>>>>>>>>>>>>>>>>>>>>>>>>>>',len(title))
+        # print('inside try block','idx',idx,'Len Title>>>>>>>>>>>>>>>>>>>>>>>>>>',len(title))
         parse_inner_page(title[idx])
         # time.sleep(2)
         return jsonify({0:idx,1:busines_names[idx],2:address[idx],3:rating[idx],4:phone[idx],5:website_link[idx],6:email[idx],7:extra_phone[idx],8:keyword,9:location})
