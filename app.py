@@ -205,7 +205,7 @@ def result():
     except Exception as e:
         print('EXPECTION >>>>>>>>>>',e,flush=True)
         try:
-            shutil.rmtree('pages')
+            # shutil.rmtree('pages')
             #os.mkdir('pages')
             print("Removed pages",flush=True)
         except Exception as e:
