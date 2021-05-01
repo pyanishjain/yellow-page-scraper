@@ -9,6 +9,7 @@ import csv
 import time
 import threading
 import os
+import shutil
 
 # https://realpython.com/flask-by-example-part-1-project-setup/
 # For auto restast of sever while saving a file
@@ -29,8 +30,7 @@ email = []
 extra_phone = []
 rating = []
 
-if not os.path.exists("pages"):
-    os.mkdir("pages")
+
 
 def parse_list_page(scrape_url,page_no):
     url = scrape_url + f"{page_no}"
@@ -47,13 +47,11 @@ def parse_list_page(scrape_url,page_no):
 
 # For downloading the html pages
 def download_url(url):
-    print('urls........',url,flush=True)
     resp = requests.get(url)
     title = "".join(x for x in url if x.isalpha()) + ".html"
     with open(f"pages/{title}", "wb") as fh:
         fh.write(resp.content)
         fh.close()
-
 
 def parse_inner_page(link):
     title = link
@@ -134,6 +132,9 @@ def scrape():
     location   =   data["location"]
     keyword   =    data["keyword"]
 
+    if not os.path.exists("pages"):
+        os.mkdir("pages")
+
     if not "&page" in scrape_url:
         scrape_url = scrape_url + "&page="
 
@@ -179,7 +180,12 @@ def result():
         return jsonify({0:idx,1:busines_names[idx],2:address[idx],3:rating[idx],4:phone[idx],5:website_link[idx],6:email[idx],7:extra_phone[idx],8:keyword,9:location})
     except Exception as e:
         print('EXPECTION >>>>>>>>>>',e,flush=True)
-        os.rmdir('pages')
+        try:
+            shutil.rmtree('pages')
+            #os.mkdir('pages')
+            print("Removed pages",flush=True)
+        except Exception as e:
+            print("ERROR!!! while deleting pages", e ,flush=True)
         return jsonify({"stop":True})
         
 

@@ -1,2 +1,3 @@
+pages/ 
+__pycache__/ 
 flask-yp-env/
-__pycache__

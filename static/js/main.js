@@ -34,6 +34,13 @@ scrape.addEventListener("click", function () {
     return;
   }
 
+  if (Number(end_page_no) - Number(start_page_no) > 35) {
+    alert(
+      "Diffrence Between End page No and Start Page number should not be greater then 35"
+    );
+    return;
+  }
+
   // Feedback to enduser that scraping starts
   scrape.style.background = "red";
   scrape.innerText =
@@ -43,7 +50,7 @@ scrape.addEventListener("click", function () {
   ScrapeAPIFunction(scrape_url, start_page_no, end_page_no, keyword, locations);
 
   //Show results into table
-  ShowResults(locations, keyword);
+  // ShowResults(locations, keyword);
 });
 
 async function ScrapeAPIFunction(
