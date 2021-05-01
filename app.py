@@ -177,6 +177,7 @@ def result():
     location = data['location']
     keyword = data['keyword']
     title = os.listdir("pages")
+    print('idx',idx,'Len Title>>>>>>>>>>>>>>>>>>>>>>>>>>',len(title))
     try:
         parse_inner_page(title[idx])
         time.sleep(1)
